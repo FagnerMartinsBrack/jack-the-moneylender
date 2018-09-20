@@ -2,6 +2,10 @@
 <link rel="stylesheet" href="qunit.css">
 <div id="qunit"></div>
 <script>
+  function strictEqual({ expected, actual }, assert) {
+    assert.strictEqual(actual, expected);
+  }
+
   QUnit.test('works', (assert) => {
     strictEqual({ expected: true, actual: true }, assert);
   });
