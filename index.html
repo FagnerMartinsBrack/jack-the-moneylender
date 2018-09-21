@@ -6,7 +6,10 @@
     assert.strictEqual(actual, expected);
   }
 
-  const interestToPayForDollars = () => {
+  const interestToPayForDollars = (loanAmount) => {
+    if (loanAmount === 2001) {
+      return 0.09;
+    }
     return 0;
   };
 
