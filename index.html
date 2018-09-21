@@ -12,7 +12,9 @@
   });
 
   QUnit.test('$2 Loan Amount', (assert) => {
-    const interestToPayForDollars = () => {};
+    const interestToPayForDollars = () => {
+      return 0;
+    };
     strictEqual({ expected: 0, actual: interestToPayForDollars(2) }, assert);
   });
 </script>
