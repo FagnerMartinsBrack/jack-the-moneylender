@@ -17,4 +17,11 @@
     };
     strictEqual({ expected: 0, actual: interestToPayForDollars(2) }, assert);
   });
+
+  QUnit.test('$3 Loan Amount', (assert) => {
+    const interestToPayForDollars = () => {
+      return 0;
+    };
+    strictEqual({ expected: 0, actual: interestToPayForDollars(3) }, assert);
+  });
 </script>
