@@ -8,13 +8,13 @@
 
   const interestToPayForDollars = (loanAmount) => {
     if (loanAmount === 2001) {
-      return 0.09;
+      return 0.09 * 1;
     }
     if (loanAmount === 2002) {
-      return 0.09 + 0.09;
+      return 0.09 * 2;
     }
     if (loanAmount === 2003) {
-      return 0.09 + 0.09 + 0.09;
+      return 0.09 * 3;
     }
     return 0;
   };
