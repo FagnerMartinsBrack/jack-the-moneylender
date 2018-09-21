@@ -10,4 +10,8 @@
     const interestToPay = 0;
     strictEqual({ expected: 0, actual: interestToPay }, assert);
   });
+
+  QUnit.test('$2 Loan Amount', (assert) => {
+    strictEqual({ expected: 0, actual: interestToPayForDollars(2) }, assert);
+  });
 </script>
