@@ -13,6 +13,8 @@
     return 0;
   };
 
+  QUnit.module('$1 - $2000 = No Interest');
+
   QUnit.test('$1 Loan Amount', (assert) => {
     strictEqual({ expected: 0, actual: interestToPayForDollars(1) }, assert);
   });
@@ -24,6 +26,8 @@
   QUnit.test('$3 Loan Amount', (assert) => {
     strictEqual({ expected: 0, actual: interestToPayForDollars(3) }, assert);
   });
+
+  QUnit.module('$2001+ = 0.09c per dollar');
 
   QUnit.test('$2000 Loan Amount', (assert) => {
     strictEqual({ expected: 0, actual: interestToPayForDollars(2000) }, assert);
