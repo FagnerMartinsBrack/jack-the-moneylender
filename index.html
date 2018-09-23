@@ -7,10 +7,13 @@
   }
 
   const interestToPayForDollars = (loanAmount) => {
-    if (loanAmount >= 2001) {
-      return 0.09 * (loanAmount - 2000);
+    const END_OF_FIRST_RANGE = 2000;
+    const CENTS_FOR_FIRST_RANGE = 0;
+    const CENTS_FOR_SECOND_RANGE = 0.09;
+    if (loanAmount > END_OF_FIRST_RANGE) {
+      return CENTS_FOR_SECOND_RANGE * (loanAmount - END_OF_FIRST_RANGE);
     }
-    return 0;
+    return CENTS_FOR_FIRST_RANGE;
   };
 
   QUnit.module('$1 - $2000 = No Interest');
