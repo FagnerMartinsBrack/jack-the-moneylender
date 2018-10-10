@@ -1,0 +1,116 @@
+<script src="qunit.js"></script>
+<link rel="stylesheet" href="qunit.css">
+<div id="qunit"></div>
+<script src="dollar.js"></script>
+<script>
+  function strictEqual({ expected, actual }, assert) {
+    assert.strictEqual(actual, expected);
+  }
+
+  QUnit.test('Visual representation for dollar amounts', (assert) => {
+    strictEqual({ expected: '$1.00', actual: Money('$1.00').toString() }, assert);
+    strictEqual({ expected: '$2.00', actual: Money('$2.00').toString() }, assert);
+    strictEqual({ expected: '$3.00', actual: Money('$3.00').toString() }, assert);
+  });
+
+  QUnit.module('Subtraction');
+
+  QUnit.test('Subtract POSITIVE amounts between $0.01 and $0.09', (assert) => {
+    strictEqual({ expected: '$0.00', actual: Money('$0.01').minus(Money('$0.01')).toString() }, assert);
+    strictEqual({ expected: '$0.01', actual: Money('$0.02').minus(Money('$0.01')).toString() }, assert);
+    strictEqual({ expected: '$0.02', actual: Money('$0.03').minus(Money('$0.01')).toString() }, assert);
+  });
+
+  QUnit.test('Subtract POSITIVE amounts between $0.10 and $0.99', (assert) => {
+    strictEqual({ expected: '$0.00', actual: Money('$0.10').minus(Money('$0.10')).toString() }, assert);
+    strictEqual({ expected: '$0.10', actual: Money('$0.20').minus(Money('$0.10')).toString() }, assert);
+    strictEqual({ expected: '$0.20', actual: Money('$0.30').minus(Money('$0.10')).toString() }, assert);
+  });
+
+  QUnit.test('Subtract POSITIVE amounts between $1.00 and $9.00', (assert) => {
+    strictEqual({ expected: '$0.00', actual: Money('$1.00').minus(Money('$1.00')).toString() }, assert);
+    strictEqual({ expected: '$1.00', actual: Money('$2.00').minus(Money('$1.00')).toString() }, assert);
+    strictEqual({ expected: '$2.00', actual: Money('$3.00').minus(Money('$1.00')).toString() }, assert);
+  });
+
+  QUnit.test('Subtract NEGATIVE amounts between $0.01 and $0.09', (assert) => {
+    strictEqual({ expected: '-$0.01', actual: Money('$0.00').minus(Money('$0.01')).toString() }, assert);
+    strictEqual({ expected: '-$0.02', actual: Money('$0.00').minus(Money('$0.02')).toString() }, assert);
+    strictEqual({ expected: '-$0.03', actual: Money('$0.00').minus(Money('$0.03')).toString() }, assert);
+  });
+
+  QUnit.test('Subtract NEGATIVE amounts between $0.10 and $0.99', (assert) => {
+    strictEqual({ expected: '-$0.10', actual: Money('$0.00').minus(Money('$0.10')).toString() }, assert);
+    strictEqual({ expected: '-$0.20', actual: Money('$0.00').minus(Money('$0.20')).toString() }, assert);
+    strictEqual({ expected: '-$0.30', actual: Money('$0.00').minus(Money('$0.30')).toString() }, assert);
+  });
+
+  QUnit.test('Subtract NEGATIVE amounts between $1.00 and $9.99', (assert) => {
+    strictEqual({ expected: '-$1.00', actual: Money('$0.00').minus(Money('$1.00')).toString() }, assert);
+    strictEqual({ expected: '-$2.00', actual: Money('$0.00').minus(Money('$2.00')).toString() }, assert);
+    strictEqual({ expected: '-$3.00', actual: Money('$0.00').minus(Money('$3.00')).toString() }, assert);
+  });
+
+  QUnit.module('Multiplication');
+
+  QUnit.test('Multiply amounts between $1.00 and $10.00 with multiplicand between $1.00 and $9.00', (assert) => {
+    strictEqual({ expected: '$1.00', actual: Money('$1.00').multipliedBy(Money('$1.00')).toString() }, assert);
+    strictEqual({ expected: '$2.00', actual: Money('$2.00').multipliedBy(Money('$1.00')).toString() }, assert);
+    strictEqual({ expected: '$3.00', actual: Money('$3.00').multipliedBy(Money('$1.00')).toString() }, assert);
+
+    strictEqual({ expected: '$2.00', actual: Money('$1.00').multipliedBy(Money('$2.00')).toString() }, assert);
+    strictEqual({ expected: '$4.00', actual: Money('$2.00').multipliedBy(Money('$2.00')).toString() }, assert);
+    strictEqual({ expected: '$6.00', actual: Money('$3.00').multipliedBy(Money('$2.00')).toString() }, assert);
+
+    strictEqual({ expected: '$3.00', actual: Money('$1.00').multipliedBy(Money('$3.00')).toString() }, assert);
+    strictEqual({ expected: '$6.00', actual: Money('$2.00').multipliedBy(Money('$3.00')).toString() }, assert);
+    strictEqual({ expected: '$9.00', actual: Money('$3.00').multipliedBy(Money('$3.00')).toString() }, assert);
+  });
+
+  QUnit.test('Multiply amounts between $0.01 and $0.09 with multiplicand between $0.01 and $0.09', (assert) => {
+    strictEqual({ expected: '$0.01', actual: Money('$1.00').multipliedBy(Money('$0.01')).toString() }, assert);
+    strictEqual({ expected: '$0.02', actual: Money('$2.00').multipliedBy(Money('$0.01')).toString() }, assert);
+    strictEqual({ expected: '$0.03', actual: Money('$3.00').multipliedBy(Money('$0.01')).toString() }, assert);
+
+    strictEqual({ expected: '$0.01', actual: Money('$1.00').multipliedBy(Money('$0.01')).toString() }, assert);
+    strictEqual({ expected: '$0.02', actual: Money('$1.00').multipliedBy(Money('$0.02')).toString() }, assert);
+    strictEqual({ expected: '$0.03', actual: Money('$1.00').multipliedBy(Money('$0.03')).toString() }, assert);
+  });
+
+  QUnit.test('Multiply amounts between $0.10 and $0.99 with multiplicand between $0.10 and $0.99', (assert) => {
+    strictEqual({ expected: '$0.10', actual: Money('$1.00').multipliedBy(Money('$0.10')).toString() }, assert);
+    strictEqual({ expected: '$0.20', actual: Money('$2.00').multipliedBy(Money('$0.10')).toString() }, assert);
+    strictEqual({ expected: '$0.30', actual: Money('$3.00').multipliedBy(Money('$0.10')).toString() }, assert);
+
+    strictEqual({ expected: '$0.10', actual: Money('$1.00').multipliedBy(Money('$0.10')).toString() }, assert);
+    strictEqual({ expected: '$0.20', actual: Money('$1.00').multipliedBy(Money('$0.20')).toString() }, assert);
+    strictEqual({ expected: '$0.30', actual: Money('$1.00').multipliedBy(Money('$0.30')).toString() }, assert);
+  });
+
+  QUnit.test('Multiply amounts when multiplier is less than multiplicand', (assert) => {
+    strictEqual({ expected: '$0.01', actual: Money('$0.01').multipliedBy(Money('$1.00')).toString() }, assert);
+    strictEqual({ expected: '$0.10', actual: Money('$0.10').multipliedBy(Money('$1.00')).toString() }, assert);
+    strictEqual({ expected: '$1.00', actual: Money('$1.00').multipliedBy(Money('$1.00')).toString() }, assert);
+    strictEqual({ expected: '$10.00', actual: Money('$10.00').multipliedBy(Money('$1.00')).toString() }, assert);
+    strictEqual({ expected: '$100.00', actual: Money('$100.00').multipliedBy(Money('$1.00')).toString() }, assert);
+    strictEqual({ expected: '$1000.00', actual: Money('$1000.00').multipliedBy(Money('$1.00')).toString() }, assert);
+  });
+
+  QUnit.module('"Greater Than" Comparison');
+
+  QUnit.test('$0.00 > $1.00', (assert) => {
+    strictEqual({ expected: false, actual: Money('$1.00').greaterThan(Money('$1.00')) }, assert);
+  });
+
+  QUnit.test('$1.00 > $1.00', (assert) => {
+    strictEqual({ expected: false, actual: Money('$1.00').greaterThan(Money('$1.00')) }, assert);
+  });
+
+  QUnit.test('$2.00 > $1.00', (assert) => {
+    strictEqual({ expected: true, actual: Money('$2.00').greaterThan(Money('$1.00')) }, assert);
+  });
+
+  QUnit.test('$2.01 > $2.00', (assert) => {
+    strictEqual({ expected: true, actual: Money('$2.01').greaterThan(Money('$1.00')) }, assert);
+  });
+</script>

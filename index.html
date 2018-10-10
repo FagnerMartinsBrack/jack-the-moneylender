@@ -1,50 +1,53 @@
 <script src="qunit.js"></script>
 <link rel="stylesheet" href="qunit.css">
 <div id="qunit"></div>
+<script src="dollar.js"></script>
 <script>
   function strictEqual({ expected, actual }, assert) {
     assert.strictEqual(actual, expected);
   }
 
-  const interestToPayForDollars = (loanAmount) => {
-    const END_OF_FIRST_RANGE = 2000;
-    const CENTS_FOR_FIRST_RANGE = 0;
-    const CENTS_FOR_SECOND_RANGE = 0.09;
-    if (loanAmount > END_OF_FIRST_RANGE) {
-      return CENTS_FOR_SECOND_RANGE * (loanAmount - END_OF_FIRST_RANGE);
+  const interestToPayFor = (loanAmount) => {
+    const END_OF_FIRST_RANGE = Money('$2000.00');
+    const CENTS_FOR_FIRST_RANGE = Money('$0.00');
+    const CENTS_FOR_SECOND_RANGE = Money('$0.09');
+    if (loanAmount.greaterThan(END_OF_FIRST_RANGE)) {
+      const dollarsAboveThreshold = loanAmount.minus(END_OF_FIRST_RANGE);
+      const interestAmount = CENTS_FOR_SECOND_RANGE.multipliedBy(dollarsAboveThreshold);
+      return interestAmount;
     }
     return CENTS_FOR_FIRST_RANGE;
   };
 
-  QUnit.module('$1 - $2000 = No Interest');
+  QUnit.module('$1.00 - $2000.00 = No Interest');
 
-  QUnit.test('$1 Loan Amount', (assert) => {
-    strictEqual({ expected: 0, actual: interestToPayForDollars(1) }, assert);
+  QUnit.test('$1.00 Loan Amount', (assert) => {
+    strictEqual({ expected: '$0.00', actual: interestToPayFor(Money('$1.00')).toString() }, assert);
   });
 
-  QUnit.test('$2 Loan Amount', (assert) => {
-    strictEqual({ expected: 0, actual: interestToPayForDollars(2) }, assert);
+  QUnit.test('$2.00 Loan Amount', (assert) => {
+    strictEqual({ expected: '$0.00', actual: interestToPayFor(Money('$2.00')).toString() }, assert);
   });
 
-  QUnit.test('$3 Loan Amount', (assert) => {
-    strictEqual({ expected: 0, actual: interestToPayForDollars(3) }, assert);
+  QUnit.test('$3.00 Loan Amount', (assert) => {
+    strictEqual({ expected: '$0.00', actual: interestToPayFor(Money('$3.00')).toString() }, assert);
   });
 
-  QUnit.module('$2001+ = 0.09c per dollar');
+  QUnit.module('$2001.00+ = 0.09c per dollar');
 
-  QUnit.test('$2000 Loan Amount', (assert) => {
-    strictEqual({ expected: 0, actual: interestToPayForDollars(2000) }, assert);
+  QUnit.test('$2000.00 Loan Amount', (assert) => {
+    strictEqual({ expected: '$0.00', actual: interestToPayFor(Money('$2000.00')).toString() }, assert);
   });
 
-  QUnit.test('$2001 Loan Amount', (assert) => {
-    strictEqual({ expected: 0.09, actual: interestToPayForDollars(2001) }, assert);
+  QUnit.test('$2001.00 Loan Amount', (assert) => {
+    strictEqual({ expected: '$0.09', actual: interestToPayFor(Money('$2001.00')).toString() }, assert);
   });
 
-  QUnit.test('$2002 Loan Amount', (assert) => {
-    strictEqual({ expected: 0.18, actual: interestToPayForDollars(2002) }, assert);
+  QUnit.test('$2002.00 Loan Amount', (assert) => {
+    strictEqual({ expected: '$0.18', actual: interestToPayFor(Money('$2002.00')).toString() }, assert);
   });
 
-  QUnit.test('$2003 Loan Amount', (assert) => {
-    strictEqual({ expected: 0.27, actual: interestToPayForDollars(2003) }, assert);
+  QUnit.test('$2003.00 Loan Amount', (assert) => {
+    strictEqual({ expected: '$0.27', actual: interestToPayFor(Money('$2003.00')).toString() }, assert);
   });
 </script>
