@@ -19,6 +19,7 @@
     }
 
     if (loanAmount.equalsTo(Money('$5001.00'))) {
+      const interestAmount = Money('$0.14').multipliedBy(dollarsAboveThreshold);
       return interestAmount;
     }
 
