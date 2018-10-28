@@ -11,11 +11,17 @@
     const END_OF_FIRST_RANGE = Money('$2000.00');
     const CENTS_FOR_FIRST_RANGE = Money('$0.00');
     const CENTS_FOR_SECOND_RANGE = Money('$0.09');
+
     if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) {
       const dollarsAboveThreshold = loanAmount.minus(END_OF_FIRST_RANGE);
       const interestAmount = CENTS_FOR_SECOND_RANGE.multipliedBy(dollarsAboveThreshold);
       return interestAmount;
     }
+
+    if (loanAmount.equalsTo(Money('$5001.00'))) {
+      return interestAmount;
+    }
+
     return CENTS_FOR_FIRST_RANGE;
   };
 
