@@ -44,6 +44,9 @@ window.Money = (input) => {
     greaterThan: (dollarValue) => {
       return thisCents > dollarValue.cents;
     },
+    lessThan: (dollarValue) => {
+      return thisCents < dollarValue.cents;
+    },
     equalsTo: (dollarValue) => {
       return thisCents === dollarValue.cents;
     }

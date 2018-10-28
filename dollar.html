@@ -114,6 +114,24 @@
     strictEqual({ expected: true, actual: Money('$2.01').greaterThan(Money('$1.00')) }, assert);
   });
 
+  QUnit.module('"Less Than" Comparison');
+
+  QUnit.test('$0.00 < $1.00', (assert) => {
+    strictEqual({ expected: true, actual: Money('$0.00').lessThan(Money('$1.00')) }, assert);
+  });
+
+  QUnit.test('$1.00 < $0.00', (assert) => {
+    strictEqual({ expected: false, actual: Money('$1.00').lessThan(Money('$0.00')) }, assert);
+  });
+
+  QUnit.test('$1.00 < $1.00', (assert) => {
+    strictEqual({ expected: false, actual: Money('$1.00').lessThan(Money('$1.00')) }, assert);
+  });
+
+  QUnit.test('$1.00 < $2.00', (assert) => {
+    strictEqual({ expected: true, actual: Money('$1.00').lessThan(Money('$2.00')) }, assert);
+  });
+
   QUnit.module('"Equals To" Comparison');
 
   QUnit.test('$0.00 = $0.00', (assert) => {
