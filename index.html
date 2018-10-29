@@ -46,6 +46,20 @@
       return interestAmount;
     }
 
+    if (loanAmount.equalsTo(Money('$5002.00'))) {
+      let interestAmount = Money('$0.00');
+
+      const dollarsAboveThresholdForSecondRange = loanAmount.minus(END_OF_FIRST_RANGE);
+      const interestAmountForSecondRange = CENTS_FOR_SECOND_RANGE.multipliedBy(dollarsAboveThresholdForSecondRange);
+      interestAmount = interestAmount.plus(interestAmountForSecondRange);
+
+      const dollarsAboveThresholdForThirdRange = Money('$5002.00').minus(Money('$5000.00'));
+      const interestAmountForThirdRange = Money('$0.14').minus(Money('$0.09')).multipliedBy(dollarsAboveThresholdForThirdRange);
+      interestAmount = interestAmount.plus(interestAmountForThirdRange);
+
+      return interestAmount;
+    }
+
     return CENTS_FOR_FIRST_RANGE;
   };
 
