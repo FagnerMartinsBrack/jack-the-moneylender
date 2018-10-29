@@ -26,7 +26,7 @@
       interestAmount = interestAmount.plus(interestAmountForSecondRange);
 
       const dollarsAboveThresholdForThirdRange = Money('$5001.00').minus(Money('$5000.00'));
-      const interestAmountForThirdRange = Money('$0.14').multipliedBy(dollarsAboveThresholdForThirdRange);
+      const interestAmountForThirdRange = Money('$0.14').minus(Money('$0.09')).multipliedBy(dollarsAboveThresholdForThirdRange);
       interestAmount = interestAmount.plus(interestAmountForThirdRange);
 
       return interestAmount;
