@@ -52,7 +52,7 @@
     strictEqual({ expected: '$0.00', actual: interestToPayFor(Money('$3.00')).toString() }, assert);
   });
 
-  QUnit.module('$2001.00+ = 0.09c per dollar');
+  QUnit.module('Between $2001.00 and $5000.00 = 0.09c per dollar');
 
   QUnit.test('$2000.00 Loan Amount', (assert) => {
     strictEqual({ expected: '$0.00', actual: interestToPayFor(Money('$2000.00')).toString() }, assert);
@@ -70,17 +70,22 @@
     strictEqual({ expected: '$0.27', actual: interestToPayFor(Money('$2003.00')).toString() }, assert);
   });
 
-
   QUnit.test('$5000.00 Loan Amount', (assert) => {
     strictEqual({ expected: '$270.00', actual: interestToPayFor(Money('$5000.00')).toString() }, assert);
   });
+
+  QUnit.module('$5001.00+ = 0.14c per dollar');
+
   QUnit.test('$5001.00 Loan Amount', (assert) => {
     strictEqual({ expected: '$270.14', actual: interestToPayFor(Money('$5001.00')).toString() }, assert);
   });
+
   QUnit.test('$5002.00 Loan Amount', (assert) => {
     strictEqual({ expected: '$270.28', actual: interestToPayFor(Money('$5002.00')).toString() }, assert);
   });
+
   QUnit.test('$5003.00 Loan Amount', (assert) => {
     strictEqual({ expected: '$270.42', actual: interestToPayFor(Money('$5003.00')).toString() }, assert);
   });
+
 </script>
