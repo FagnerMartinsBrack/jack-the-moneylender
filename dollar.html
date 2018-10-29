@@ -51,6 +51,20 @@
     strictEqual({ expected: '-$3.00', actual: Money('$0.00').minus(Money('$3.00')).toString() }, assert);
   });
 
+  QUnit.module('Sum');
+
+  QUnit.test('Sum POSITIVE amounts between $0.01 and $0.09', (assert) => {
+    strictEqual({ expected: '$0.02', actual: Money('$0.01').plus(Money('$0.01')).toString() }, assert);
+    strictEqual({ expected: '$0.03', actual: Money('$0.02').plus(Money('$0.01')).toString() }, assert);
+    strictEqual({ expected: '$0.04', actual: Money('$0.03').plus(Money('$0.01')).toString() }, assert);
+  });
+
+  QUnit.test('Sum NEGATIVE amounts between $0.01 and $0.09', (assert) => {
+    strictEqual({ expected: '-$0.01', actual: Money('$0.00').plus(Money('-$0.01')).toString() }, assert);
+    strictEqual({ expected: '-$0.02', actual: Money('$0.00').plus(Money('-$0.02')).toString() }, assert);
+    strictEqual({ expected: '-$0.03', actual: Money('$0.00').plus(Money('-$0.03')).toString() }, assert);
+  });
+
   QUnit.module('Multiplication');
 
   QUnit.test('Multiply amounts between $1.00 and $10.00 with multiplicand between $1.00 and $9.00', (assert) => {

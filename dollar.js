@@ -41,6 +41,10 @@ window.Money = (input) => {
       const resultOfSubtraction = thisCents - dollarValue.cents;
       return Money(toDecimalPoint(resultOfSubtraction));
     },
+    plus: (dollarValue) => {
+      const resultOfSum = thisCents + dollarValue.cents;
+      return Money(toDecimalPoint(resultOfSum));
+    },
     greaterThan: (dollarValue) => {
       return thisCents > dollarValue.cents;
     },
