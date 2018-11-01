@@ -44,14 +44,6 @@
     strictEqual({ expected: '$0.00', actual: interestToPayFor(Money('$1.00')).toString() }, assert);
   });
 
-  QUnit.test('A loan for $2.00 owes $0 interest', (assert) => {
-    strictEqual({ expected: '$0.00', actual: interestToPayFor(Money('$2.00')).toString() }, assert);
-  });
-
-  QUnit.test('A loan for $3.00 owes $0 interest', (assert) => {
-    strictEqual({ expected: '$0.00', actual: interestToPayFor(Money('$3.00')).toString() }, assert);
-  });
-
   QUnit.test('A loan for $2000.00 owes $0 interest', (assert) => {
     strictEqual({ expected: '$0.00', actual: interestToPayFor(Money('$2000.00')).toString() }, assert);
   });
@@ -66,10 +58,6 @@
     strictEqual({ expected: '$0.18', actual: interestToPayFor(Money('$2002.00')).toString() }, assert);
   });
 
-  QUnit.test('A loan of $2003.00 owes $0.27 interest', (assert) => {
-    strictEqual({ expected: '$0.27', actual: interestToPayFor(Money('$2003.00')).toString() }, assert);
-  });
-
   QUnit.test('A loan of $5000 owes $270.00 interest', (assert) => {
     strictEqual({ expected: '$270.00', actual: interestToPayFor(Money('$5000.00')).toString() }, assert);
   });
@@ -82,10 +70,6 @@
 
   QUnit.test('A loan of $5002.00 owes $270.28 interest', (assert) => {
     strictEqual({ expected: '$270.28', actual: interestToPayFor(Money('$5002.00')).toString() }, assert);
-  });
-
-  QUnit.test('A loan of $5003.00 owes $270.42 interest', (assert) => {
-    strictEqual({ expected: '$270.42', actual: interestToPayFor(Money('$5003.00')).toString() }, assert);
   });
 
 </script>
