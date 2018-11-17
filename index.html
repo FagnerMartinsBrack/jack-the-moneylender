@@ -43,21 +43,20 @@
       centsForPreviousRange: CENTS_FOR_THIRD_RANGE
     };
 
+    let interestAmount = Money('$0.00');
+
     if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) {
-      let interestAmount = Money('$0.00');
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
       return interestAmount;
     }
 
     if (loanAmount.greaterThan(END_OF_SECOND_RANGE) && loanAmount.lessThan(Money('$10001.00'))) {
-      let interestAmount = Money('$0.00');
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove5000));
       return interestAmount;
     }
 
     if (loanAmount.greaterThan(END_OF_THIRD_RANGE)) {
-      let interestAmount = Money('$0.00');
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove5000));
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove10000));
