@@ -36,15 +36,12 @@
 
     const ranges = [rangeAbove2000, rangeAbove5000, rangeAbove10000];
 
-    let interestAmount = Money('$0.00');
-
-    for (let i = 0; i < ranges.length; i += 1) {
-      if (loanAmount.greaterThan(ranges[i].endOfThisRange)) {
-        interestAmount = interestAmount.plus(calculateInterest(loanAmount, ranges[i]));
+    return ranges.reduce((interestAmount, range) => {
+      if (loanAmount.greaterThan(range.endOfThisRange)) {
+        return interestAmount.plus(calculateInterest(loanAmount, range));
       }
-    }
-
-    return interestAmount;
+      return interestAmount;
+    }, Money('$0.00'));
   };
 
   QUnit.module('Loans of $2000 and below are interest-free. For example');
