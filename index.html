@@ -8,15 +8,6 @@
   }
 
   const interestToPayFor = (loanAmount) => {
-    const END_OF_FIRST_RANGE = Money('$2000.00');
-    const END_OF_SECOND_RANGE = Money('$5000.00');
-    const END_OF_THIRD_RANGE = Money('$10000.00');
-
-    const CENTS_FOR_FIRST_RANGE = Money('$0.00');
-    const CENTS_FOR_SECOND_RANGE = Money('$0.09');
-    const CENTS_FOR_THIRD_RANGE = Money('$0.14');
-    const CENTS_FOR_FOURTH_RANGE = Money('$0.21');
-
     // Consider fixing the ifs and creating ranges before generalizing this function.
     // Otherwise too many tests fail
     const calculateInterest = (loanAmount, { endOfThisRange, centsForThisRange, centsForPreviousRange }) => {
@@ -26,34 +17,34 @@
     };
 
     const rangeAbove2000 = {
-      endOfThisRange: END_OF_FIRST_RANGE,
-      centsForThisRange: CENTS_FOR_SECOND_RANGE,
-      centsForPreviousRange: CENTS_FOR_FIRST_RANGE
+      endOfThisRange: Money('$2000.00'),
+      centsForThisRange: Money('$0.09'),
+      centsForPreviousRange: Money('$0.00')
     };
 
     const rangeAbove5000 = {
-      endOfThisRange: END_OF_SECOND_RANGE,
-      centsForThisRange: CENTS_FOR_THIRD_RANGE,
-      centsForPreviousRange: CENTS_FOR_SECOND_RANGE
+      endOfThisRange: Money('$5000.00'),
+      centsForThisRange: Money('$0.14'),
+      centsForPreviousRange: Money('$0.09')
     };
 
     const rangeAbove10000 = {
-      endOfThisRange: END_OF_THIRD_RANGE,
-      centsForThisRange: CENTS_FOR_FOURTH_RANGE,
-      centsForPreviousRange: CENTS_FOR_THIRD_RANGE
+      endOfThisRange: Money('$10000.00'),
+      centsForThisRange: Money('$0.21'),
+      centsForPreviousRange: Money('$0.14')
     };
 
     let interestAmount = Money('$0.00');
 
-    if (loanAmount.greaterThan(END_OF_FIRST_RANGE)) {
+    if (loanAmount.greaterThan(Money('$2000.00'))) {
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
     }
 
-    if (loanAmount.greaterThan(END_OF_SECOND_RANGE)) {
+    if (loanAmount.greaterThan(Money('$5000.00'))) {
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove5000));
     }
 
-    if (loanAmount.greaterThan(END_OF_THIRD_RANGE)) {
+    if (loanAmount.greaterThan(Money('$10000.00'))) {
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove10000));
     }
 
