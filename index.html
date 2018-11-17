@@ -17,7 +17,9 @@
     const CENTS_FOR_THIRD_RANGE = Money('$0.14');
     const CENTS_FOR_FOURTH_RANGE = Money('$0.21');
 
-    const calculateInterest = (loanAmount, endOfThisRange, centsForThisRange, centsForPreviousRange) => {
+    // Consider fixing the ifs and creating ranges before generalizing this function.
+    // Otherwise too many tests fail
+    const calculateInterest = (loanAmount, { endOfThisRange, centsForThisRange, centsForPreviousRange }) => {
       const dollarsAboveThreshold = loanAmount.minus(endOfThisRange);
       const interestAmount = centsForThisRange.minus(centsForPreviousRange).multipliedBy(dollarsAboveThreshold);
       return interestAmount;
@@ -26,9 +28,12 @@
     if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) {
       let interestAmount = Money('$0.00');
 
-      interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE)
-      );
+      const rangeAbove2000 = {
+        endOfThisRange: END_OF_FIRST_RANGE,
+        centsForThisRange: CENTS_FOR_SECOND_RANGE,
+        centsForPreviousRange: CENTS_FOR_FIRST_RANGE
+      };
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
 
       return interestAmount;
     }
@@ -36,13 +41,19 @@
     if (loanAmount.greaterThan(END_OF_SECOND_RANGE) && loanAmount.lessThan(Money('$10001.00'))) {
       let interestAmount = Money('$0.00');
 
-      interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE)
-      );
+      const rangeAbove2000 = {
+        endOfThisRange: END_OF_FIRST_RANGE,
+        centsForThisRange: CENTS_FOR_SECOND_RANGE,
+        centsForPreviousRange: CENTS_FOR_FIRST_RANGE
+      };
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
 
-      interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE)
-      );
+      const rangeAbove5000 = {
+        endOfThisRange: END_OF_SECOND_RANGE,
+        centsForThisRange: CENTS_FOR_THIRD_RANGE,
+        centsForPreviousRange: CENTS_FOR_SECOND_RANGE
+      };
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove5000));
 
       return interestAmount;
     }
@@ -50,16 +61,31 @@
     if (loanAmount.greaterThan(END_OF_THIRD_RANGE)) {
       let interestAmount = Money('$0.00');
 
+      const rangeAbove2000 = {
+        endOfThisRange: END_OF_FIRST_RANGE,
+        centsForThisRange: CENTS_FOR_SECOND_RANGE,
+        centsForPreviousRange: CENTS_FOR_FIRST_RANGE
+      };
       interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE)
+        calculateInterest(loanAmount, rangeAbove2000)
       );
 
+      const rangeAbove5000 = {
+        endOfThisRange: END_OF_SECOND_RANGE,
+        centsForThisRange: CENTS_FOR_THIRD_RANGE,
+        centsForPreviousRange: CENTS_FOR_SECOND_RANGE
+      };
       interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE)
+        calculateInterest(loanAmount, rangeAbove5000)
       );
 
+      const rangeAbove10000 = {
+        endOfThisRange: END_OF_THIRD_RANGE,
+        centsForThisRange: CENTS_FOR_FOURTH_RANGE,
+        centsForPreviousRange: CENTS_FOR_THIRD_RANGE
+      };
       interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, END_OF_THIRD_RANGE, CENTS_FOR_FOURTH_RANGE, CENTS_FOR_THIRD_RANGE)
+        calculateInterest(loanAmount, rangeAbove10000)
       );
 
       return interestAmount;
