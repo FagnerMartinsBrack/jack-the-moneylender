@@ -17,9 +17,9 @@
     const CENTS_FOR_THIRD_RANGE = Money('$0.14');
     const CENTS_FOR_FOURTH_RANGE = Money('$0.21');
 
-    const calculateInterestForGreaterThan2000 = (loanAmount, endOfFirstRange, centsForSecondRange) => {
+    const calculateInterestForGreaterThan2000 = (loanAmount, endOfFirstRange, centsForSecondRange, centsForFirstRange) => {
       const dollarsAboveThreshold = loanAmount.minus(END_OF_FIRST_RANGE);
-      const interestAmount = CENTS_FOR_SECOND_RANGE.multipliedBy(dollarsAboveThreshold);
+      const interestAmount = CENTS_FOR_SECOND_RANGE.minus(centsForFirstRange).multipliedBy(dollarsAboveThreshold);
       return interestAmount;
     };
 
@@ -37,14 +37,14 @@
     };
 
     if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) { // In the real commits, remember to remove this magic number
-      const interestForGreaterThan2000 = calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE);
+      const interestForGreaterThan2000 = calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE);
       return interestForGreaterThan2000;
     }
 
     if (loanAmount.greaterThan(END_OF_SECOND_RANGE) && loanAmount.lessThan(Money('$10001.00'))) {
       let interestAmount = Money('$0.00');
 
-      const interestForGreaterThan2000 = calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE);
+      const interestForGreaterThan2000 = calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE);
       interestAmount = interestAmount.plus(interestForGreaterThan2000);
 
       const interestForGreaterThan5000 = calculateInterestForGreaterThan5000(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE);
@@ -56,7 +56,7 @@
     if (loanAmount.greaterThan(END_OF_THIRD_RANGE)) {
       let interestAmount = Money('$0.00');
 
-      const interestForGreaterThan2000 = calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE);
+      const interestForGreaterThan2000 = calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE);
       interestAmount = interestAmount.plus(interestForGreaterThan2000);
 
       const interestForGreaterThan5000 = calculateInterestForGreaterThan5000(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE);
