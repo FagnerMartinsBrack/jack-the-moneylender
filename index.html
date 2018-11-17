@@ -17,10 +17,15 @@
     const CENTS_FOR_THIRD_RANGE = Money('$0.14');
     const CENTS_FOR_FOURTH_RANGE = Money('$0.21');
 
-    if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) {
+    const calculateInterestForGreaterThan2000 = (loanAmount, endOfFirstRange, centsForSecondRange) => {
       const dollarsAboveThreshold = loanAmount.minus(END_OF_FIRST_RANGE);
       const interestAmount = CENTS_FOR_SECOND_RANGE.multipliedBy(dollarsAboveThreshold);
       return interestAmount;
+    };
+
+    if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) {
+      const interestForGreaterThan2000 = calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE);
+      return interestForGreaterThan2000;
     }
 
     if (loanAmount.greaterThan(END_OF_SECOND_RANGE) && loanAmount.lessThan(Money('$10001.00'))) {
