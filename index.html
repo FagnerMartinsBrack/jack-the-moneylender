@@ -11,8 +11,9 @@
     const rangeAbove2000 = { endOfRange: Money('$2000.00'), cents: Money('$0.09'), centsForPreviousRange: Money('$0.00') };
     const rangeAbove5000 = { endOfRange: Money('$5000.00'), cents: Money('$0.14'), centsForPreviousRange: Money('$0.09') };
     const rangeAbove10000 = { endOfRange: Money('$10000.00'), cents: Money('$0.21'), centsForPreviousRange: Money('$0.14') };
+    const rangeAbove20000 = { endOfRange: Money('$20000.00'), cents: Money('$0.50'), centsForPreviousRange: Money('$0.21') };
 
-    return [rangeAbove2000, rangeAbove5000, rangeAbove10000].reduce((interestAmount, range) => {
+    return [rangeAbove2000, rangeAbove5000, rangeAbove10000, rangeAbove20000].reduce((interestAmount, range) => {
       if (loanAmount.greaterThan(range.endOfRange)) {
         const dollarsAboveThreshold = loanAmount.minus(range.endOfRange);
         const calculatedInterestAmount = range.cents.minus(range.centsForPreviousRange).multipliedBy(dollarsAboveThreshold);
@@ -69,6 +70,14 @@
 
   QUnit.test('A loan of $10002.00 owes $970.00 interest', (assert) => {
     strictEqual({ expected: '$970.42', actual: interestToPayFor(Money('$10002.00')).toString() }, assert);
+  });
+
+  QUnit.test('A loan of $20000.00 owes $3070.00 interest', (assert) => {
+    strictEqual({ expected: '$3070.00', actual: interestToPayFor(Money('$20000.00')).toString() }, assert);
+  });
+
+  QUnit.test('A loan of $20001.00 owes $3070.50 interest', (assert) => {
+    strictEqual({ expected: '$3070.50', actual: interestToPayFor(Money('$20001.00')).toString() }, assert);
   });
 
 </script>
