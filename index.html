@@ -47,23 +47,20 @@
 
     if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) {
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
-      return interestAmount;
     }
 
     if (loanAmount.greaterThan(END_OF_SECOND_RANGE) && loanAmount.lessThan(Money('$10001.00'))) {
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove5000));
-      return interestAmount;
     }
 
     if (loanAmount.greaterThan(END_OF_THIRD_RANGE)) {
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove5000));
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove10000));
-      return interestAmount;
     }
 
-    return CENTS_FOR_FIRST_RANGE;
+    return interestAmount;
   };
 
   QUnit.module('Loans of $2000 and below are interest-free. For example');
