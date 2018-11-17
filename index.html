@@ -8,37 +8,15 @@
   }
 
   const interestToPayFor = (loanAmount) => {
-    // Consider fixing the ifs and creating ranges before generalizing this function.
-    // Otherwise too many tests fail
-    const calculateInterest = (loanAmount, { endOfThisRange, centsForThisRange, centsForPreviousRange }) => {
-      const dollarsAboveThreshold = loanAmount.minus(endOfThisRange);
-      const interestAmount = centsForThisRange.minus(centsForPreviousRange).multipliedBy(dollarsAboveThreshold);
-      return interestAmount;
-    };
+    const rangeAbove2000 = { endOfRange: Money('$2000.00'), cents: Money('$0.09'), centsForPreviousRange: Money('$0.00') };
+    const rangeAbove5000 = { endOfRange: Money('$5000.00'), cents: Money('$0.14'), centsForPreviousRange: Money('$0.09') };
+    const rangeAbove10000 = { endOfRange: Money('$10000.00'), cents: Money('$0.21'), centsForPreviousRange: Money('$0.14') };
 
-    const rangeAbove2000 = {
-      endOfThisRange: Money('$2000.00'),
-      centsForThisRange: Money('$0.09'),
-      centsForPreviousRange: Money('$0.00')
-    };
-
-    const rangeAbove5000 = {
-      endOfThisRange: Money('$5000.00'),
-      centsForThisRange: Money('$0.14'),
-      centsForPreviousRange: Money('$0.09')
-    };
-
-    const rangeAbove10000 = {
-      endOfThisRange: Money('$10000.00'),
-      centsForThisRange: Money('$0.21'),
-      centsForPreviousRange: Money('$0.14')
-    };
-
-    const ranges = [rangeAbove2000, rangeAbove5000, rangeAbove10000];
-
-    return ranges.reduce((interestAmount, range) => {
-      if (loanAmount.greaterThan(range.endOfThisRange)) {
-        return interestAmount.plus(calculateInterest(loanAmount, range));
+    return [rangeAbove2000, rangeAbove5000, rangeAbove10000].reduce((interestAmount, range) => {
+      if (loanAmount.greaterThan(range.endOfRange)) {
+        const dollarsAboveThreshold = loanAmount.minus(range.endOfRange);
+        const calculatedInterestAmount = range.cents.minus(range.centsForPreviousRange).multipliedBy(dollarsAboveThreshold);
+        return interestAmount.plus(calculatedInterestAmount);
       }
       return interestAmount;
     }, Money('$0.00'));
