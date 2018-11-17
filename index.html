@@ -34,18 +34,20 @@
       centsForPreviousRange: Money('$0.14')
     };
 
+    const ranges = [rangeAbove2000, rangeAbove5000, rangeAbove10000];
+
     let interestAmount = Money('$0.00');
 
-    if (loanAmount.greaterThan(rangeAbove2000.endOfThisRange)) {
-      interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
+    if (loanAmount.greaterThan(ranges[0].endOfThisRange)) {
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, ranges[0]));
     }
 
-    if (loanAmount.greaterThan(rangeAbove5000.endOfThisRange)) {
-      interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove5000));
+    if (loanAmount.greaterThan(ranges[1].endOfThisRange)) {
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, ranges[1]));
     }
 
-    if (loanAmount.greaterThan(rangeAbove10000.endOfThisRange)) {
-      interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove10000));
+    if (loanAmount.greaterThan(ranges[2].endOfThisRange)) {
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, ranges[2]));
     }
 
     return interestAmount;
