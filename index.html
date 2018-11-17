@@ -17,22 +17,23 @@
     const CENTS_FOR_THIRD_RANGE = Money('$0.14');
     const CENTS_FOR_FOURTH_RANGE = Money('$0.21');
 
-    const calculateInterestForGreaterThan2000 = (loanAmount, endOfFirstRange, centsForSecondRange, centsForFirstRange) => {
-      const dollarsAboveThreshold = loanAmount.minus(END_OF_FIRST_RANGE);
-      const interestAmount = CENTS_FOR_SECOND_RANGE.minus(centsForFirstRange).multipliedBy(dollarsAboveThreshold);
+    // TODO Remove specific wording from functions and generalize
+    const calculateInterestForGreaterThan2000 = (loanAmount, endOfThisRange, centsForThisRange, centsForPreviousRange) => {
+      const dollarsAboveThreshold = loanAmount.minus(endOfThisRange);
+      const interestAmount = centsForThisRange.minus(centsForPreviousRange).multipliedBy(dollarsAboveThreshold);
       return interestAmount;
     };
 
-    const calculateInterestForGreaterThan5000 = (loanAmount, endOfSecondRange, centsForThirdRange, centsForSecondRange) => {
-      const dollarsAboveThresholdForThirdRange = loanAmount.minus(endOfSecondRange);
-      const interestAmount = centsForThirdRange.minus(centsForSecondRange).multipliedBy(dollarsAboveThresholdForThirdRange);
+    const calculateInterestForGreaterThan5000 = (loanAmount, endOfThisRange, centsForThisRange, centsForPreviousRange) => {
+      const dollarsAboveThreshold = loanAmount.minus(endOfThisRange);
+      const interestAmount = centsForThisRange.minus(centsForPreviousRange).multipliedBy(dollarsAboveThreshold);
       return interestAmount;
     };
 
     // The reason you create the function locally first is that you can see the arguments. The conascence is by position.
-    const calculateInterestForGreaterThan10000 = (loanAmount, endOfThirdRange, centsForFourthRange, centsForThirdRange) => {
-      const dollarsAboveThresholdForFourthRange = loanAmount.minus(END_OF_THIRD_RANGE);
-      const interestAmount = CENTS_FOR_FOURTH_RANGE.minus(CENTS_FOR_THIRD_RANGE).multipliedBy(dollarsAboveThresholdForFourthRange);
+    const calculateInterestForGreaterThan10000 = (loanAmount, endOfThisRange, centsForThisRange, centsForPreviousRange) => {
+      const dollarsAboveThreshold = loanAmount.minus(endOfThisRange);
+      const interestAmount = centsForThisRange.minus(centsForPreviousRange).multipliedBy(dollarsAboveThreshold);
       return interestAmount;
     };
 
