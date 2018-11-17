@@ -38,6 +38,10 @@
     if (loanAmount.equalsTo(Money('$10001.00'))) {
       let interestAmount = Money('$0.00');
 
+      const dollarsAboveThresholdForThirdRange = loanAmount.minus(END_OF_SECOND_RANGE);
+      const interestAmountForThirdRange = CENTS_FOR_THIRD_RANGE.minus(CENTS_FOR_SECOND_RANGE).multipliedBy(dollarsAboveThresholdForThirdRange);
+      interestAmount = interestAmount.plus(interestAmountForThirdRange);
+
       const dollarsAboveThresholdForFourthRange = Money('$10001.00').minus(Money('$10000.00'));
       const interestAmountForFourthRange = Money('$0.21').minus(Money('$0.14')).multipliedBy(dollarsAboveThresholdForFourthRange);
       interestAmount = interestAmount.plus(interestAmountForFourthRange);
