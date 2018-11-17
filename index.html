@@ -38,16 +38,10 @@
 
     let interestAmount = Money('$0.00');
 
-    if (loanAmount.greaterThan(ranges[0].endOfThisRange)) {
-      interestAmount = interestAmount.plus(calculateInterest(loanAmount, ranges[0]));
-    }
-
-    if (loanAmount.greaterThan(ranges[1].endOfThisRange)) {
-      interestAmount = interestAmount.plus(calculateInterest(loanAmount, ranges[1]));
-    }
-
-    if (loanAmount.greaterThan(ranges[2].endOfThisRange)) {
-      interestAmount = interestAmount.plus(calculateInterest(loanAmount, ranges[2]));
+    for (let i = 0; i < ranges.length; i += 1) {
+      if (loanAmount.greaterThan(ranges[i].endOfThisRange)) {
+        interestAmount = interestAmount.plus(calculateInterest(loanAmount, ranges[i]));
+      }
     }
 
     return interestAmount;
