@@ -34,9 +34,15 @@
       const interestForGreaterThan2000 = calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE);
       interestAmount = interestAmount.plus(interestForGreaterThan2000);
 
-      const dollarsAboveThresholdForThirdRange = loanAmount.minus(END_OF_SECOND_RANGE);
-      const interestAmountForThirdRange = CENTS_FOR_THIRD_RANGE.minus(CENTS_FOR_SECOND_RANGE).multipliedBy(dollarsAboveThresholdForThirdRange);
-      interestAmount = interestAmount.plus(interestAmountForThirdRange);
+      // Keep signature the same so that you can see the patterns later
+      const calculateInterestForGreaterThan5000 = (loanAmount, endOfSecondRange, centsForThirdRange, centsForSecondRange) => {
+        const dollarsAboveThresholdForThirdRange = loanAmount.minus(endOfSecondRange);
+        const interestAmount = centsForThirdRange.minus(centsForSecondRange).multipliedBy(dollarsAboveThresholdForThirdRange);
+        return interestAmount;
+      };
+
+      const interestForGreaterThan5000 = calculateInterestForGreaterThan5000(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE);
+      interestAmount = interestAmount.plus(interestForGreaterThan5000);
 
       return interestAmount;
     }
