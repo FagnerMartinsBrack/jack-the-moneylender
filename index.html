@@ -36,15 +36,15 @@
 
     let interestAmount = Money('$0.00');
 
-    if (loanAmount.greaterThan(Money('$2000.00'))) {
+    if (loanAmount.greaterThan(rangeAbove2000.endOfThisRange)) {
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove2000));
     }
 
-    if (loanAmount.greaterThan(Money('$5000.00'))) {
+    if (loanAmount.greaterThan(rangeAbove5000.endOfThisRange)) {
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove5000));
     }
 
-    if (loanAmount.greaterThan(Money('$10000.00'))) {
+    if (loanAmount.greaterThan(rangeAbove10000.endOfThisRange)) {
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, rangeAbove10000));
     }
 
