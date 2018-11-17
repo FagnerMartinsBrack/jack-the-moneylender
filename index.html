@@ -72,4 +72,11 @@
     strictEqual({ expected: '$270.28', actual: interestToPayFor(Money('$5002.00')).toString() }, assert);
   });
 
+  // 10000 - 5002 = 4998
+  // 4998 * 0.14 = 699.72
+  // 699.72 + 270.28 = 970
+  QUnit.test('A loan of $10000.00 owes $970.00 interest', (assert) => {
+    strictEqual({ expected: '$970.00', actual: interestToPayFor(Money('$10000.00')).toString() }, assert);
+  });
+
 </script>
