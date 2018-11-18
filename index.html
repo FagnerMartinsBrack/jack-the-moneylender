@@ -76,4 +76,8 @@
     strictEqual({ expected: '$970.00', actual: interestToPayFor(Money('$10000.00')).toString() }, assert);
   });
 
+  QUnit.test('A loan of $10001.00 owes $970.21 interest', (assert) => {
+    strictEqual({ expected: '$970.21', actual: interestToPayFor(Money('$10001.00')).toString() }, assert);
+  });
+
 </script>
