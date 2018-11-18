@@ -19,6 +19,12 @@
     return interestForGreaterThan5000;
   };
 
+  const calculateInterestForGreaterThan10000 = (loanAmount, endOfThirdRange, centsForFourthRange, centsForThirdRange) => {
+    const dollarsAboveThresholdForGreaterThan10000 = loanAmount.minus(endOfThirdRange);
+    const interestAmountForGreaterThan10000 = centsForFourthRange.minus(centsForThirdRange).multipliedBy(dollarsAboveThresholdForGreaterThan10000);
+    return interestAmountForGreaterThan10000;
+  };
+
   const interestToPayFor = (loanAmount) => {
     const END_OF_FIRST_RANGE = Money('$2000.00');
     const END_OF_SECOND_RANGE = Money('$5000.00');
@@ -54,12 +60,6 @@
 
       const interestAmountForThirdRange = calculateInterestForGreaterThan5000(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE);
       interestAmount = interestAmount.plus(interestAmountForThirdRange);
-
-      const calculateInterestForGreaterThan10000 = (loanAmount, endOfThirdRange, centsForFourthRange, centsForThirdRange) => {
-        const dollarsAboveThresholdForGreaterThan10000 = loanAmount.minus(endOfThirdRange);
-        const interestAmountForGreaterThan10000 = centsForFourthRange.minus(centsForThirdRange).multipliedBy(dollarsAboveThresholdForGreaterThan10000);
-        return interestAmountForGreaterThan10000;
-      };
 
       const interestAmountForFourthRange = calculateInterestForGreaterThan10000(loanAmount, END_OF_THIRD_RANGE, CENTS_FOR_FOURTH_RANGE, CENTS_FOR_THIRD_RANGE);
       interestAmount = interestAmount.plus(interestAmountForFourthRange);
