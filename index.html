@@ -18,8 +18,12 @@
     const CENTS_FOR_FOURTH_RANGE = Money('$0.21');
 
     if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) {
-      const dollarsAboveThreshold = loanAmount.minus(END_OF_FIRST_RANGE);
-      const interestAmount = CENTS_FOR_SECOND_RANGE.multipliedBy(dollarsAboveThreshold);
+      const calculateInterestForGreaterThan2000 = (loanAmount, endOfFirstRange, centsForSecondRange) => {
+        const dollarsAboveThresholdForGreaterThan2000 = loanAmount.minus(endOfFirstRange);
+        const interestForGreaterThan2000 = centsForSecondRange.multipliedBy(dollarsAboveThresholdForGreaterThan2000);
+        return interestForGreaterThan2000;
+      };
+      const interestAmount = calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE);
       return interestAmount;
     }
 
