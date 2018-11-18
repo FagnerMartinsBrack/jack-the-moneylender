@@ -24,12 +24,11 @@
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, greaterThan2000));
     }
 
-    if (loanAmount.greaterThan(Money('$5000.00')) && loanAmount.lessThan(Money('$10001.00'))) {
+    if (loanAmount.greaterThan(Money('$5000.00'))) {
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, greaterThan5000));
     }
 
     if (loanAmount.greaterThan(Money('$10000.00'))) {
-      interestAmount = interestAmount.plus(calculateInterest(loanAmount, greaterThan5000));
       interestAmount = interestAmount.plus(calculateInterest(loanAmount, greaterThan10000));
     }
 
