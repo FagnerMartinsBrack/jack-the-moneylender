@@ -14,8 +14,13 @@
   };
 
   const calculateInterestForGreaterThan5000 = (loanAmount, endOfRange, interestPerDollar, previousInterestPerDollar) => {
-    const dollarsAboveThreshold = loanAmount.minus(endOfRange);
-    const interestToPay = interestPerDollar.minus(previousInterestPerDollar).multipliedBy(dollarsAboveThreshold);
+    const greaterThan5000 = {
+      endOfRange: endOfRange,
+      interestPerDollar: interestPerDollar,
+      previousInterestPerDollar: previousInterestPerDollar
+    };
+    const dollarsAboveThreshold = loanAmount.minus(greaterThan5000.endOfRange);
+    const interestToPay = greaterThan5000.interestPerDollar.minus(greaterThan5000.previousInterestPerDollar).multipliedBy(dollarsAboveThreshold);
     return interestToPay;
   };
 
