@@ -10,10 +10,12 @@
   const interestToPayFor = (loanAmount) => {
     const END_OF_FIRST_RANGE = Money('$2000.00');
     const END_OF_SECOND_RANGE = Money('$5000.00');
+    const END_OF_THIRD_RANGE = Money('$10000.00');
 
     const CENTS_FOR_FIRST_RANGE = Money('$0.00');
     const CENTS_FOR_SECOND_RANGE = Money('$0.09');
     const CENTS_FOR_THIRD_RANGE = Money('$0.14');
+    const CENTS_FOR_FOURTH_RANGE = Money('$0.21');
 
     if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) {
       const dollarsAboveThreshold = loanAmount.minus(END_OF_FIRST_RANGE);
@@ -35,7 +37,7 @@
       return interestAmount;
     }
 
-    if (loanAmount.equalsTo(Money('$10001.00'))) {
+    if (loanAmount.greaterThan(END_OF_THIRD_RANGE)) {
       let interestAmount = Money('$0.00');
 
       const dollarsAboveThresholdForSecondRange = loanAmount.minus(END_OF_FIRST_RANGE);
@@ -46,8 +48,8 @@
       const interestAmountForThirdRange = CENTS_FOR_THIRD_RANGE.minus(CENTS_FOR_SECOND_RANGE).multipliedBy(dollarsAboveThresholdForThirdRange);
       interestAmount = interestAmount.plus(interestAmountForThirdRange);
 
-      const dollarsAboveThresholdForFourthRange = Money('$10001.00').minus(Money('$10000.00'));
-      const interestAmountForFourthRange = Money('$0.21').minus(Money('$0.14')).multipliedBy(dollarsAboveThresholdForFourthRange);
+      const dollarsAboveThresholdForFourthRange = loanAmount.minus(END_OF_THIRD_RANGE);
+      const interestAmountForFourthRange = CENTS_FOR_FOURTH_RANGE.minus(CENTS_FOR_THIRD_RANGE).multipliedBy(dollarsAboveThresholdForFourthRange);
       interestAmount = interestAmount.plus(interestAmountForFourthRange);
 
       return interestAmount;
@@ -96,6 +98,10 @@
 
   QUnit.test('A loan of $10001.00 owes $970.21 interest', (assert) => {
     strictEqual({ expected: '$970.21', actual: interestToPayFor(Money('$10001.00')).toString() }, assert);
+  });
+
+  QUnit.test('A loan of $10002.00 owes $270.28 interest', (assert) => {
+    strictEqual({ expected: '$970.42', actual: interestToPayFor(Money('$10002.00')).toString() }, assert);
   });
 
 </script>
