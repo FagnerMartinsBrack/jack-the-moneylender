@@ -13,12 +13,7 @@
     return interestToPay;
   };
 
-  const calculateInterestForGreaterThan5000 = (loanAmount, endOfRange, interestPerDollar, previousInterestPerDollar) => {
-    const greaterThan5000 = {
-      endOfRange: endOfRange,
-      interestPerDollar: interestPerDollar,
-      previousInterestPerDollar: previousInterestPerDollar
-    };
+  const calculateInterestForGreaterThan5000 = (loanAmount, greaterThan5000) => {
     const dollarsAboveThreshold = loanAmount.minus(greaterThan5000.endOfRange);
     const interestToPay = greaterThan5000.interestPerDollar.minus(greaterThan5000.previousInterestPerDollar).multipliedBy(dollarsAboveThreshold);
     return interestToPay;
@@ -66,8 +61,13 @@
       interestAmount = interestAmount.plus(
         calculateInterestForGreaterThan2000(loanAmount, greaterThan2000)
       );
+      const greaterThan5000 = {
+        endOfRange: END_OF_SECOND_RANGE,
+        interestPerDollar: CENTS_FOR_THIRD_RANGE,
+        previousInterestPerDollar: CENTS_FOR_SECOND_RANGE
+      };
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan5000(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE)
+        calculateInterestForGreaterThan5000(loanAmount, greaterThan5000)
       );
 
       return interestAmount;
@@ -84,8 +84,13 @@
       interestAmount = interestAmount.plus(
         calculateInterestForGreaterThan2000(loanAmount, greaterThan2000)
       );
+      const greaterThan5000 = {
+        endOfRange: END_OF_SECOND_RANGE,
+        interestPerDollar: CENTS_FOR_THIRD_RANGE,
+        previousInterestPerDollar: CENTS_FOR_SECOND_RANGE
+      };
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan5000(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE)
+        calculateInterestForGreaterThan5000(loanAmount, greaterThan5000)
       );
       interestAmount = interestAmount.plus(
         calculateInterestForGreaterThan10000(loanAmount, END_OF_THIRD_RANGE, CENTS_FOR_FOURTH_RANGE, CENTS_FOR_THIRD_RANGE)
