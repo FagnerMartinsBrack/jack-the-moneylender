@@ -19,12 +19,7 @@
     return interestToPay;
   };
 
-  const calculateInterestForGreaterThan10000 = (loanAmount, endOfRange, interestPerDollar, previousInterestPerDollar) => {
-    const greaterThan10000 = {
-      endOfRange: endOfRange,
-      interestPerDollar: interestPerDollar,
-      previousInterestPerDollar: previousInterestPerDollar
-    };
+  const calculateInterestForGreaterThan10000 = (loanAmount, greaterThan10000) => {
     const dollarsAboveThreshold = loanAmount.minus(greaterThan10000.endOfRange);
     const interestToPay = greaterThan10000.interestPerDollar.minus(greaterThan10000.previousInterestPerDollar).multipliedBy(dollarsAboveThreshold);
     return interestToPay;
@@ -97,8 +92,13 @@
       interestAmount = interestAmount.plus(
         calculateInterestForGreaterThan5000(loanAmount, greaterThan5000)
       );
+      const greaterThan10000 = {
+        endOfRange: END_OF_THIRD_RANGE,
+        interestPerDollar: CENTS_FOR_FOURTH_RANGE,
+        previousInterestPerDollar: CENTS_FOR_THIRD_RANGE
+      };
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan10000(loanAmount, END_OF_THIRD_RANGE, CENTS_FOR_FOURTH_RANGE, CENTS_FOR_THIRD_RANGE)
+        calculateInterestForGreaterThan10000(loanAmount, greaterThan10000)
       );
 
       return interestAmount;
