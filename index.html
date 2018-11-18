@@ -7,9 +7,9 @@
     assert.strictEqual(actual, expected);
   }
 
-  const calculateInterestForGreaterThan2000 = (loanAmount, endOfFirstRange, centsForSecondRange) => {
+  const calculateInterestForGreaterThan2000 = (loanAmount, endOfFirstRange, centsForSecondRange, centsForFirstRange) => {
     const dollarsAboveThresholdForGreaterThan2000 = loanAmount.minus(endOfFirstRange);
-    const interestForGreaterThan2000 = centsForSecondRange.multipliedBy(dollarsAboveThresholdForGreaterThan2000);
+    const interestForGreaterThan2000 = centsForSecondRange.minus(centsForFirstRange).multipliedBy(dollarsAboveThresholdForGreaterThan2000);
     return interestForGreaterThan2000;
   };
 
@@ -39,7 +39,7 @@
       let interestAmount = Money('$0.00');
 
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE)
+        calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE)
       );
 
       return interestAmount;
@@ -49,7 +49,7 @@
       let interestAmount = Money('$0.00');
 
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE)
+        calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE)
       );
       interestAmount = interestAmount.plus(
         calculateInterestForGreaterThan5000(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE)
@@ -62,7 +62,7 @@
       let interestAmount = Money('$0.00');
 
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE)
+        calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE)
       );
       interestAmount = interestAmount.plus(
         calculateInterestForGreaterThan5000(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE)
