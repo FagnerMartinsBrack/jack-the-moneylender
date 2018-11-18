@@ -7,12 +7,7 @@
     assert.strictEqual(actual, expected);
   }
 
-  const calculateInterestForGreaterThan2000 = (loanAmount, endOfRange, interestPerDollar, previousInterestPerDollar) => {
-    const greaterThan2000 = {
-      endOfRange: endOfRange,
-      interestPerDollar: interestPerDollar,
-      previousInterestPerDollar: previousInterestPerDollar
-    };
+  const calculateInterestForGreaterThan2000 = (loanAmount, greaterThan2000) => {
     const dollarsAboveThreshold = loanAmount.minus(greaterThan2000.endOfRange);
     const interestToPay = greaterThan2000.interestPerDollar.minus(greaterThan2000.previousInterestPerDollar).multipliedBy(dollarsAboveThreshold);
     return interestToPay;
@@ -43,8 +38,13 @@
     if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) {
       let interestAmount = Money('$0.00');
 
+      const greaterThan2000 = {
+        endOfRange: END_OF_FIRST_RANGE,
+        interestPerDollar: CENTS_FOR_SECOND_RANGE,
+        previousInterestPerDollar: CENTS_FOR_FIRST_RANGE
+      };
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE)
+        calculateInterestForGreaterThan2000(loanAmount, greaterThan2000)
       );
 
       return interestAmount;
@@ -53,8 +53,13 @@
     if (loanAmount.greaterThan(END_OF_SECOND_RANGE) && loanAmount.lessThan(Money('$10001.00'))) {
       let interestAmount = Money('$0.00');
 
+      const greaterThan2000 = {
+        endOfRange: END_OF_FIRST_RANGE,
+        interestPerDollar: CENTS_FOR_SECOND_RANGE,
+        previousInterestPerDollar: CENTS_FOR_FIRST_RANGE
+      };
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE)
+        calculateInterestForGreaterThan2000(loanAmount, greaterThan2000)
       );
       interestAmount = interestAmount.plus(
         calculateInterestForGreaterThan5000(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE)
@@ -66,8 +71,13 @@
     if (loanAmount.greaterThan(END_OF_THIRD_RANGE)) {
       let interestAmount = Money('$0.00');
 
+      const greaterThan2000 = {
+        endOfRange: END_OF_FIRST_RANGE,
+        interestPerDollar: CENTS_FOR_SECOND_RANGE,
+        previousInterestPerDollar: CENTS_FOR_FIRST_RANGE
+      };
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan2000(loanAmount, END_OF_FIRST_RANGE, CENTS_FOR_SECOND_RANGE, CENTS_FOR_FIRST_RANGE)
+        calculateInterestForGreaterThan2000(loanAmount, greaterThan2000)
       );
       interestAmount = interestAmount.plus(
         calculateInterestForGreaterThan5000(loanAmount, END_OF_SECOND_RANGE, CENTS_FOR_THIRD_RANGE, CENTS_FOR_SECOND_RANGE)
