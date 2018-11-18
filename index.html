@@ -14,73 +14,38 @@
   };
 
   const interestToPayFor = (loanAmount) => {
-    const END_OF_FIRST_RANGE = Money('$2000.00');
-    const END_OF_SECOND_RANGE = Money('$5000.00');
-    const END_OF_THIRD_RANGE = Money('$10000.00');
+    const greaterThan2000 = { endOfRange: Money('$2000.00'), interestPerDollar: Money('$0.09'), previousInterestPerDollar: Money('$0.00') };
+    const greaterThan5000 = { endOfRange: Money('$5000.00'), interestPerDollar: Money('$0.14'), previousInterestPerDollar: Money('$0.09') };
+    const greaterThan10000 = { endOfRange: Money('$10000.00'), interestPerDollar: Money('$0.21'), previousInterestPerDollar: Money('$0.14') };
 
-    const CENTS_FOR_FIRST_RANGE = Money('$0.00');
-    const CENTS_FOR_SECOND_RANGE = Money('$0.09');
-    const CENTS_FOR_THIRD_RANGE = Money('$0.14');
-    const CENTS_FOR_FOURTH_RANGE = Money('$0.21');
-
-    const greaterThan2000 = {
-      endOfRange: END_OF_FIRST_RANGE,
-      interestPerDollar: CENTS_FOR_SECOND_RANGE,
-      previousInterestPerDollar: CENTS_FOR_FIRST_RANGE
-    };
-
-    const greaterThan5000 = {
-      endOfRange: END_OF_SECOND_RANGE,
-      interestPerDollar: CENTS_FOR_THIRD_RANGE,
-      previousInterestPerDollar: CENTS_FOR_SECOND_RANGE
-    };
-
-    const greaterThan10000 = {
-      endOfRange: END_OF_THIRD_RANGE,
-      interestPerDollar: CENTS_FOR_FOURTH_RANGE,
-      previousInterestPerDollar: CENTS_FOR_THIRD_RANGE
-    };
-
-    if (loanAmount.greaterThan(END_OF_FIRST_RANGE) && loanAmount.lessThan(Money('$5001.00'))) {
+    if (loanAmount.greaterThan(Money('$2000.00')) && loanAmount.lessThan(Money('$5001.00'))) {
       let interestAmount = Money('$0.00');
 
-      interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, greaterThan2000)
-      );
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, greaterThan2000));
 
       return interestAmount;
     }
 
-    if (loanAmount.greaterThan(END_OF_SECOND_RANGE) && loanAmount.lessThan(Money('$10001.00'))) {
+    if (loanAmount.greaterThan(Money('$5000.00')) && loanAmount.lessThan(Money('$10001.00'))) {
       let interestAmount = Money('$0.00');
 
-      interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, greaterThan2000)
-      );
-      interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, greaterThan5000)
-      );
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, greaterThan2000));
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, greaterThan5000));
 
       return interestAmount;
     }
 
-    if (loanAmount.greaterThan(END_OF_THIRD_RANGE)) {
+    if (loanAmount.greaterThan(Money('$10000.00'))) {
       let interestAmount = Money('$0.00');
 
-      interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, greaterThan2000)
-      );
-      interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, greaterThan5000)
-      );
-      interestAmount = interestAmount.plus(
-        calculateInterest(loanAmount, greaterThan10000)
-      );
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, greaterThan2000));
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, greaterThan5000));
+      interestAmount = interestAmount.plus(calculateInterest(loanAmount, greaterThan10000));
 
       return interestAmount;
     }
 
-    return CENTS_FOR_FIRST_RANGE;
+    return Money('$0.00');
   };
 
   QUnit.module('Loans of $2000 and below are interest-free. For example');
