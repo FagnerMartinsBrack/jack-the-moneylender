@@ -7,9 +7,9 @@
     assert.strictEqual(actual, expected);
   }
 
-  const calculateInterestForGreaterThan2000 = (loanAmount, greaterThan2000) => {
-    const dollarsAboveThreshold = loanAmount.minus(greaterThan2000.endOfRange);
-    const interestToPay = greaterThan2000.interestPerDollar.minus(greaterThan2000.previousInterestPerDollar).multipliedBy(dollarsAboveThreshold);
+  const calculateInterest = (loanAmount, range) => {
+    const dollarsAboveThreshold = loanAmount.minus(range.endOfRange);
+    const interestToPay = range.interestPerDollar.minus(range.previousInterestPerDollar).multipliedBy(dollarsAboveThreshold);
     return interestToPay;
   };
 
@@ -57,7 +57,7 @@
       let interestAmount = Money('$0.00');
 
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan2000(loanAmount, greaterThan2000)
+        calculateInterest(loanAmount, greaterThan2000)
       );
 
       return interestAmount;
@@ -67,7 +67,7 @@
       let interestAmount = Money('$0.00');
 
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan2000(loanAmount, greaterThan2000)
+        calculateInterest(loanAmount, greaterThan2000)
       );
       interestAmount = interestAmount.plus(
         calculateInterestForGreaterThan5000(loanAmount, greaterThan5000)
@@ -80,7 +80,7 @@
       let interestAmount = Money('$0.00');
 
       interestAmount = interestAmount.plus(
-        calculateInterestForGreaterThan2000(loanAmount, greaterThan2000)
+        calculateInterest(loanAmount, greaterThan2000)
       );
       interestAmount = interestAmount.plus(
         calculateInterestForGreaterThan5000(loanAmount, greaterThan5000)
