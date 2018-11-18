@@ -7,22 +7,22 @@
     assert.strictEqual(actual, expected);
   }
 
-  const calculateInterestForGreaterThan2000 = (loanAmount, endOfFirstRange, centsForSecondRange, centsForFirstRange) => {
-    const dollarsAboveThresholdForGreaterThan2000 = loanAmount.minus(endOfFirstRange);
-    const interestForGreaterThan2000 = centsForSecondRange.minus(centsForFirstRange).multipliedBy(dollarsAboveThresholdForGreaterThan2000);
-    return interestForGreaterThan2000;
+  const calculateInterestForGreaterThan2000 = (loanAmount, endOfRange, interestPerDollar, previousInterestPerDollar) => {
+    const dollarsAboveThreshold = loanAmount.minus(endOfRange);
+    const interestToPay = interestPerDollar.minus(previousInterestPerDollar).multipliedBy(dollarsAboveThreshold);
+    return interestToPay;
   };
 
-  const calculateInterestForGreaterThan5000 = (loanAmount, endOfSecondRange, centsForThirdRange, centsForSecondRange) => {
-    const dollarsAboveThresholdForGreaterThan5000 = loanAmount.minus(endOfSecondRange);
-    const interestForGreaterThan5000 = centsForThirdRange.minus(centsForSecondRange).multipliedBy(dollarsAboveThresholdForGreaterThan5000);
-    return interestForGreaterThan5000;
+  const calculateInterestForGreaterThan5000 = (loanAmount, endOfRange, interestPerDollar, previousInterestPerDollar) => {
+    const dollarsAboveThreshold = loanAmount.minus(endOfRange);
+    const interestToPay = interestPerDollar.minus(previousInterestPerDollar).multipliedBy(dollarsAboveThreshold);
+    return interestToPay;
   };
 
-  const calculateInterestForGreaterThan10000 = (loanAmount, endOfThirdRange, centsForFourthRange, centsForThirdRange) => {
-    const dollarsAboveThresholdForGreaterThan10000 = loanAmount.minus(endOfThirdRange);
-    const interestAmountForGreaterThan10000 = centsForFourthRange.minus(centsForThirdRange).multipliedBy(dollarsAboveThresholdForGreaterThan10000);
-    return interestAmountForGreaterThan10000;
+  const calculateInterestForGreaterThan10000 = (loanAmount, endOfRange, interestPerDollar, previousInterestPerDollar) => {
+    const dollarsAboveThreshold = loanAmount.minus(endOfRange);
+    const interestToPay = interestPerDollar.minus(previousInterestPerDollar).multipliedBy(dollarsAboveThreshold);
+    return interestToPay;
   };
 
   const interestToPayFor = (loanAmount) => {
