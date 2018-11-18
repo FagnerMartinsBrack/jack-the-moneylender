@@ -59,7 +59,7 @@
     strictEqual({ expected: '$270.00', actual: interestToPayFor(Money('$5000.00')).toString() }, assert);
   });
 
-  QUnit.module('After $5000.00, each additional dollar owes $0.14 of interest. For example');
+  QUnit.module('After $5000.00 up to $10000.00, each additional dollar owes $0.14 of interest. For example');
 
   QUnit.test('A loan of $5001.00 owes $270.14 interest', (assert) => {
     strictEqual({ expected: '$270.14', actual: interestToPayFor(Money('$5001.00')).toString() }, assert);
@@ -73,11 +73,13 @@
     strictEqual({ expected: '$970.00', actual: interestToPayFor(Money('$10000.00')).toString() }, assert);
   });
 
+  QUnit.module('After $10000.00, each additional dollar owes $0.21 of interest. For example');
+
   QUnit.test('A loan of $10001.00 owes $970.21 interest', (assert) => {
     strictEqual({ expected: '$970.21', actual: interestToPayFor(Money('$10001.00')).toString() }, assert);
   });
 
-  QUnit.test('A loan of $10002.00 owes $270.28 interest', (assert) => {
+  QUnit.test('A loan of $10002.00 owes $970.42 interest', (assert) => {
     strictEqual({ expected: '$970.42', actual: interestToPayFor(Money('$10002.00')).toString() }, assert);
   });
 
