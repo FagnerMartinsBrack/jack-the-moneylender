@@ -24,9 +24,9 @@
 
     let interestAmount = Money('$0.00');
 
-    for (let i = 0; i < ranges.length; i += 1) {
-      if (loanAmount.greaterThan(ranges[i].endOfRange)) {
-        interestAmount = interestAmount.plus(calculateInterest(loanAmount, ranges[i]));
+    for (range of ranges) {
+      if (loanAmount.greaterThan(range.endOfRange)) {
+        interestAmount = interestAmount.plus(calculateInterest(loanAmount, range));
       }
     }
 
